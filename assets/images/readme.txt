@@ -1,0 +1,1 @@
+Legg inn alle bildene dine her, navngitt day01.webp ... day24.webp
