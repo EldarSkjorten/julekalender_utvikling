@@ -66,6 +66,17 @@
     }
     .card.locked .status svg{stroke:rgba(255,255,255,.7)}
 
+    /* Modal (åpne luker) */
+    .modal{position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.5);padding:16px;z-index:50}
+    .modal.hidden{display:none}
+    .modal-content{background:var(--card);border:1px solid #263453;border-radius:18px;width:min(760px,96%);padding:18px;position:relative;color:var(--text)}
+    .modal-content img{width:100%;border-radius:12px;margin:10px 0;background:#0b1220;display:block}
+    .close{position:absolute;right:18px;top:10px;background:transparent;color:#fff;border:none;font-size:1.8rem;cursor:pointer;line-height:1}
+    .close:focus-visible{outline:3px solid var(--focus);border-radius:8px}
+    .btns{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;background:#1db954;color:#fff;text-decoration:none;font-weight:700}
+    #btn-apple{background:#333}
+
     .snow::before,.snow::after{content:"";position:fixed;left:0;top:-50px;width:100%;height:100%;pointer-events:none;background-image:radial-gradient(2px 2px at 20px 30px,#fff 50%,transparent 51%),radial-gradient(3px 3px at 100px 80px,#fff 50%,transparent 51%),radial-gradient(2px 2px at 200px 50px,#fff 50%,transparent 51%),radial-gradient(3px 3px at 300px 10px,#fff 50%,transparent 51%),radial-gradient(2px 2px at 400px 40px,#fff 50%,transparent 51%);background-size:400px 200px;animation:snow 10s linear infinite;opacity:.75}
     .snow::after{animation-duration:16s;opacity:.5;filter:blur(1px)}
     @keyframes snow{to{transform:translateY(200px)}}
@@ -103,7 +114,7 @@
           <rect width="100%" height="100%" fill="#141e30"/>
           <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#e5e7eb" font-size="42">Julebilde</text>
         </svg>`);
-      return Array.from({length:24}, (_,i)=>({title:\`${i+1}. desember\`,image:placeholder,text:\`Tekst for luke ${i+1}.\`,apple:'',spotify:''}));
+      return Array.from({length:24}, (_,i)=>({title:`${i+1}. desember`,image:placeholder,text:`Tekst for luke ${i+1}.`,apple:'',spotify:''}));
     }
 
     const grid=document.getElementById('grid');
@@ -118,16 +129,16 @@
         card.className='card';
         const displayNum = day.toString();
         const icon = day<=FIXED_TEST_DAY
-          ? \`<span class="status" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2c-.8 0-1.4.6-1.4 1.4v1.6c-2.5.6-4.6 2.8-4.6 5.5 0 3.4-1.4 5-2 5.4h16c-.6-.4-2-2-2-5.4 0-2.7-2.1-4.9-4.6-5.5V3.4c0-.8-.6-1.4-1.4-1.4zM12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2z"/></svg></span>\`
-          : \`<span class="status" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V8a4 4 0 0 1 8 0v2"/></svg></span>\`;
-        card.innerHTML = \`\${icon}<span class="num">\${displayNum}</span>\`;
+          ? `<span class=\"status\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><path d=\"M12 2c-.8 0-1.4.6-1.4 1.4v1.6c-2.5.6-4.6 2.8-4.6 5.5 0 3.4-1.4 5-2 5.4h16c-.6-.4-2-2-2-5.4 0-2.7-2.1-4.9-4.6-5.5V3.4c0-.8-.6-1.4-1.4-1.4zM12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2z\"/></svg></span>`
+          : `<span class=\"status\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\"><rect x=\"5\" y=\"10\" width=\"14\" height=\"10\" rx=\"2\"/><path d=\"M8 10V8a4 4 0 0 1 8 0v2\"/></svg></span>`;
+        card.innerHTML = `${icon}<span class=\"num\">${displayNum}</span>`;
         if(day>FIXED_TEST_DAY){card.classList.add('locked');card.disabled=true;}else{card.addEventListener('click',()=>openModal(day,d));}
         grid.appendChild(card);
       });
     }
 
     function openModal(day,item){
-      document.getElementById('modal-title').textContent=\`Luke \${day}\`;
+      document.getElementById('modal-title').textContent=`Luke ${day}`;
       const img=document.getElementById('modal-image');
       img.src=item.image;
       document.getElementById('modal-text').textContent=item.text;
