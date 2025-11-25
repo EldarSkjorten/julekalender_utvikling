@@ -74,6 +74,7 @@
     .modal-title{position:relative;z-index:1;font-family:var(--title-font);font-size:1.7rem;margin:0;text-align:center;color:#fff;text-shadow:0 1px 0 rgba(0,0,0,.35)}
     @media (max-width:420px){.modal-title{font-size:1.5rem}}
     .modal-text{font-size:1rem;line-height:1.5;margin:0}
+    .modal-text p{margin:0 0 0.7em;}
     .btns{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap;justify-content:flex-start}
     .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;color:#fff;text-decoration:none;font-weight:700;border:none;cursor:pointer}
     .btn svg{width:18px;height:18px;fill:currentColor}
@@ -128,6 +129,27 @@
     const btnApple = document.getElementById('btn-apple');
     const btnSpotify = document.getElementById('btn-spotify');
     const btnClose = document.getElementById('btn-close');
+    // Formatterer tekst til avsnitt (alternativ 3)
+    function formatModalText(raw){
+      if(!raw) return '';
+
+      // Escape HTML-tegn så vi ikke tolker <, > osv.
+      const esc = raw
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;');
+
+      // Del i avsnitt på tomme linjer
+      const paragraphs = esc.split(/\n\s*\n/);
+
+      // Lag <p>...</p> for hvert avsnitt
+      // og la enkel \n bli til <br>
+      return paragraphs
+        .map(function(p){
+          return '<p>' + p.replace(/\n/g,'<br>') + '</p>';
+        })
+        .join('');
+    }
 
     function showFriendlyError(){
       const el = document.getElementById('err');
@@ -166,7 +188,7 @@
     function openModal(day,item){
       const title = item && (item.title || item.date) ? (item.title || item.date) : `${day}. desember`;
       modalTitle.textContent = title;
-      modalText.textContent = item && item.text ? item.text : '';
+      modalText.innerHTML = formatModalText(item && item.text ? item.text : '');
 
       if(item && item.apple){
         btnApple.href = item.apple;
