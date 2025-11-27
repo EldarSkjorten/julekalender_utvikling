@@ -142,7 +142,19 @@
   </div>
 
   <script>
-    const FIXED_TEST_DAY = 24; // test: åpne t.o.m. 8. des.
+    // Dato-styrt åpning av luker
+// Overstyr for testing: sett til true for å åpne ALLE luker
+const DEBUG_ALWAYS_OPEN = false;
+
+function isDoorOpen(day){
+  if(DEBUG_ALWAYS_OPEN) return true;
+  const now = new Date();
+  const m = now.getMonth();
+  const d = now.getDate();
+  if(m < 11) return false;
+  if(m > 11) return true;
+  return d >= day;
+} // test: åpne t.o.m. 8. des.
     const DATA_URLS = ['data/days.json','./data/days.json'];
 
     const modal = document.getElementById('modal');
@@ -259,14 +271,14 @@ GOD JUL!`;
         const d = days[i] || { title:`${i+1}. desember` };
         const day = i+1;
         const card=document.createElement('button');
-        card.className='card'+(day>FIXED_TEST_DAY?' locked':'');
+        card.className = 'card' + (isDoorOpen(day) ? '' : ' locked');
         card.type='button';
-        const icon = day<=FIXED_TEST_DAY
+        const icon = isDoorOpen(day)
           ? `<span class='status' aria-hidden='true'><svg viewBox='0 0 24 24'><path d='M12 2c-.8 0-1.4.6-1.4 1.4v1.6c-2.5.6-4.6 2.8-4.6 5.5 0 3.4-1.4 5-2 5.4h16c-.6-.4-2-2-2-5.4 0-2.7-2.1-4.9-4.6-5.5V3.4c0-.8-.6-1.4-1.4-1.4zM12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2z'/></svg></span>`
           : `<span class='status' aria-hidden='true'><svg viewBox='0 0 24 24'><rect x='5' y='10' width='14' height='10' rx='2'/><path d='M8 10V8a4 4 0 0 1 8 0v2'/></svg></span>`;
         card.innerHTML = `${icon}<span class='num'>${day}</span>`;
-        if(day>FIXED_TEST_DAY){
-          card.disabled = true; // ikke klikkbar
+        if(!isDoorOpen(day)){
+          card.disabled = true;
         }else{
           card.addEventListener('click',()=>openModal(day,d));
         }
