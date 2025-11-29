@@ -34,7 +34,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex, nofollow" />
   <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap" rel="stylesheet" />
-  <title>Markus sin Julekalender</title>
+  <title>...navn... sin Julekalender</title>
   <style>
     :root{
       /* Farger & fonter */
@@ -122,7 +122,7 @@
 <body>
   <div class="snow"></div>
   <header class="container">
-    <h1>🎄 Markus sin Julekalender</h1>
+    <h1>🎄 ...navn... sin Julekalender</h1>
     <p>Et lite stykke musikk hver dag fram til jul. En del gleder og kanskje noen utfordringer?</p>
   </header>
 
@@ -178,7 +178,7 @@
 
   <script>
 // Overstyr for testing: sett til true for å åpne ALLE luker
-const DEBUG_ALWAYS_OPEN = true;  // endre til false når du går "live"
+const DEBUG_ALWAYS_OPEN = false;  // endre til false når du går "live"
 
 // Dato-styrt åpning av luker
 function isDoorOpen(day){
@@ -210,6 +210,7 @@ const DATA_URLS = ['data/days.json','./data/days.json'];
       debugIndicator.style.display = 'block';
     }
 
+    // Info-tekst til vinduet som åpnes med i-knappen rett under toppen
     const INFO_TEXT = `Så gøy at du er inne i julekalenderen!
 
 Her får du et musikkstykke, eller en låt, hver dag fram til jul. Bruk gjerne mobil, så åpner lenkene seg rett i Spotify-/Apple Music-appen.
